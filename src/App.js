@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import { useState, useEffect } from "react";
 
-function App() {
+export default function App() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts?_limit=10`
+        );
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let actualData = await response.json();
+        setData(actualData);
+        setError(null);
+      } catch(err) {
+        setError(err.message);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }  
+    }
+    setTimeout(() => getData(), 5 * 1000)
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React now
-        </a>
-      </header>
+      <h1>API Posts</h1>
+      {loading && <div>A moment please...</div>}
+      {error && (
+        <div>{`There is a problem fetching the post data - ${error}`}</div>
+      )}
+      <ul>
+        {!loading && data &&
+          data.map(({ id, title }) => (
+            <li key={id}>
+              <h3>{title}</h3>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }
-
-export default App;
