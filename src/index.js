@@ -6,5 +6,5 @@ import { Example } from './Example';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <Example />
 );
