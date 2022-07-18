@@ -30,6 +30,10 @@ export default function App() {
     setTimeout(() => getData(), 5 * 1000)
   }, [])
 
+  console.log("data", data);
+  console.log("loading", loading);
+  console.log("error", error);
+
   return (
     <div className="App">
       <h1>API Posts</h1>
