@@ -42,7 +42,7 @@ export default function App() {
         <div>{`There is a problem fetching the post data - ${error}`}</div>
       )}
       <ul>
-        {!loading && data &&
+        {data &&
           data.map(({ id, title }) => (
             <li key={id}>
               <h3>{title}</h3>
