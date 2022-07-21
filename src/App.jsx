@@ -27,7 +27,7 @@ export default function App() {
         setLoading(false);
       }  
     }
-    setTimeout(() => getData(), 5 * 1000)
+    setTimeout(() => getData(), 5 * 1000) //5 seconds
   }, [])
 
   console.log("data", data);
